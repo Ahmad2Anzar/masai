@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #navbar
+        {
+            width: 100%;
+            height: 20%;
+            /* background-color: red; */
+            text-align: center;
+            background-image: linear-gradient(grey,black);
+        }
+        button
+        {
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding: 10px 10px;
+            
+        }
+        #container
+        {  width: 70%;
+            display: grid;
+            grid-template-columns: repeat(3,1fr);
+            gap: 1%;
+            text-align: center;
+            margin: auto;
+            margin-top: 2%;
+        }
+        img{width: 150px;
+        height: 150px;}
+        #container>div
+        {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbar">
+        <button >Fetch User</button>
+    </div>
+    <div id="container"></div>
+    
+    <script>
+   
+        let fetchuser=document.querySelector('button')
+        let container=document.getElementById("container")
+        function showdata(data)
+        {
+          data. data.forEach(function(element) {
+            let div=document.createElement("div")
+
+            let image=document.createElement("img")
+            image.src=element.avatar
+
+            let name=document.createElement('h4')
+            name.innerHTML=element.first_name
+
+            let email=document.createElement("p")
+            email.innerHTML=element.email
+
+            div.append(image,name,email)
+            container.append(div)
+            
+           });
+        }
+        
+        let getuser=async()=>
+        {
+            let response= await fetch("https://reqres.in/api/users?page=2")
+            let data= await response.json()
+            console.log(data)
+             showdata(data)
+         }
+
+        
+        fetchuser.addEventListener("click",getuser)
+    </script>
+</body>
+</html>
